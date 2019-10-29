@@ -10,8 +10,8 @@ Vagrant.configure("2") do |config|
     v.memory = 1024
     v.cpus = 2
     v.linked_clone = true
-    # v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-    # v.customize ["modifyvm", :id, "--ioapic", "on"]
+    v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    v.customize ["modifyvm", :id, "--ioapic", "on"]
   end
 
   #
