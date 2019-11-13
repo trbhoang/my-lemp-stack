@@ -40,6 +40,7 @@ apt-get dist-upgrade ; apt-get -y update ; apt-get -y upgrade
 apt-get -y install unattended-upgrades software-properties-common apache2-utils
 apt-get -y install htop
 
+
 # Install security updates automatically
 echo -e "APT::Periodic::Update-Package-Lists \"1\";\nAPT::Periodic::Unattended-Upgrade \"1\";\nUnattended-Upgrade::Automatic-Reboot \"false\";\n" > /etc/apt/apt.conf.d/20auto-upgrades
 /etc/init.d/unattended-upgrades restart
@@ -68,6 +69,31 @@ makemap hash smtp-auth < smtp-auth
 make -C /etc/mail
 systemctl restart sendmail
 echo "Subject: sendmail test" | sendmail -v $SYSADMIN_EMAIL
+
+
+### Security
+
+# Install & configure CSF (https://www.configserver.com/cp/csf.html)
+apt-get -y install libwww-perl unzip
+cd /usr/src/
+wget https://download.configserver.com/csf.tgz
+tar -xzf csf.tgz
+cd csf
+sh install.sh
+
+cd /usr/local/csf/bin/
+perl csftest.pl
+
+sed -i 's/TESTING = "1"/TESTING = "0"/g' /etc/csf/csf.conf
+sed -i 's/LF_ALERT_TO = ""/LF_ALERT_TO = "'$SYSADMIN_EMAIL'"/g' /etc/csf/csf.conf
+systemctl start csf
+systemctl start lfd
+systemctl enable csf
+systemctl enable lfd
+
+# List csf firewall rules
+csf -l
+
 
 
 # Setup simple Firewall
