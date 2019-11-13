@@ -20,6 +20,6 @@ Vagrant.configure("2") do |config|
   # to provision ansible playbook
   #    vagrant provision
   #
-  # config.vm.hostname = "writerviet.com"
+  config.vm.hostname = "writerviet.com"
   config.vm.network :private_network, ip: "192.168.2.2"
 end
