@@ -1,14 +1,22 @@
 #!/bin/bash
-add-apt-repository -y ppa:nginx/development && apt-get update
+
+
+# Install Nginx (1.16)
+add-apt-repository -y ppa:nginx/stable && apt-get update
 apt-get -y install nginx
-# will install mariadb 10.1.41  ->  should install latest version 10.4
-apt-get -y install mariadb-server
-service mysql stop
-mysql_install_db
-service mysql start
-# TODO: install php 7.3.10
-add-apt-repository -y ppa:ondrej/php && apt-get update
-apt-get -y install php7.2
-apt-get -y install php7.2-fpm php7.2-curl php7.2-gd php7.2-json php7.2-mysql php7.2-sqlite3 php7.2-pgsql php7.2-bz2 php7.2-mbstring php7.2-soap php7.2-xml php7.2-zip
+
+
+# Install latest stable Mariadb (10.4)
+apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+add-apt-repository 'deb [arch=amd64,arm64,ppc64el] https://mirrors.nxthost.com/mariadb/repo/10.4/ubuntu bionic main'
+apt update
+apt -y install mariadb-server mariadb-client
 mysql_secure_installation
-# TODO: check why still install apache
+
+
+# Install php 7.3.
+add-apt-repository -y ppa:ondrej/php && apt-get update
+apt-get -y install php7.3-fpm
+apt-get -y install php-pear php7.3-curl php7.3-dev php7.3-gd php7.3-mbstring php7.3-zip php7.3-mysql php7.3-xml
+
+

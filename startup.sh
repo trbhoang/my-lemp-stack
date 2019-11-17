@@ -80,6 +80,18 @@ echo "Subject: sendmail test" | sendmail -v $SYSADMIN_EMAIL
 
 
 # Install Webmin for server Control Panel
+# Install Webmin modules for CSF, Nginx, MariaDB
+#		> Webmin > Webmin Configuration > Webmin Modules >
+#		- CSF: > From local file > /usr/local/csf/csfwebmin.tgz > Install module > Refresh modules
+#				CSF module was installed under "System"
+#   - Nginx: > From HTTP or FTP URL > https://www.justindhoffman.com/sites/justindhoffman.com/files/nginx-0.11.wbm_.gz > Install module > Refresh modules
+#				Nginx module was install under "Servers"
+#	 	- MariaDB:
+#   		Unused Modules > MySQL Database Server > module configuration > System configuration
+#   		Command to start MySQL server	> systemctl start mariadb
+#   		Command to stop MySQL server	> systemctl stop mariadb
+#   		MySQL configuration file	> /etc/mysql/my.cnf
+#
 wget -q http://www.webmin.com/jcameron-key.asc -O- | sudo apt-key add -
 add-apt-repository "deb [arch=amd64] http://download.webmin.com/download/repository sarge contrib"
 apt -y install webmin
@@ -117,6 +129,9 @@ sed -i 's/TCP_OUT = "20,21,22,25,53,80,110,113,443,587,993,995"/TCP_OUT = "20,21
 echo "exe:/usr/sbin/rsyslogd" | tee --append /etc/csf/csf.pignore
 echo "exe:/lib/systemd/systemd-networkd" | tee --append /etc/csf/csf.pignore
 echo "exe:/usr/sbin/atd" | tee --append /etc/csf/csf.pignore
+echo "exe:/lib/systemd/systemd" | tee --append /etc/csf/csf.pignore
+echo "exe:/lib/systemd/systemd-resolved" | tee --append /etc/csf/csf.pignore
+
 
 systemctl start csf
 systemctl start lfd
