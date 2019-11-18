@@ -122,8 +122,10 @@ sed -i 's/IGNORE_ALLOW = "0"/IGNORE_ALLOW = "1"/g' /etc/csf/csf.conf
 sed -i 's/ICMP_IN = "1"/ICMP_IN = "0"/g' /etc/csf/csf.conf
 sed -i 's/LF_ALERT_TO = ""/LF_ALERT_TO = "'$SYSADMIN_EMAIL'"/g' /etc/csf/csf.conf
 # Allow Webmin port
-sed -i 's/TCP_IN = "20,21,22,25,53,80,110,143,443,465,587,993,995"/TCP_IN = "20,21,22,25,53,80,110,143,443,465,587,993,995,10000"/g' /etc/csf/csf.conf
-sed -i 's/TCP_OUT = "20,21,22,25,53,80,110,113,443,587,993,995"/TCP_OUT = "20,21,22,25,53,80,110,113,443,587,993,995,10000"/g' /etc/csf/csf.conf
+sed -i 's/TCP_IN = "20,21,22,25,53,80,110,143,443,465,587,993,995"/TCP_IN = "22,80,443,10000"/g' /etc/csf/csf.conf
+sed -i 's/TCP_OUT = "20,21,22,25,53,80,110,113,443,587,993,995"/TCP_OUT = "22,80,443,10000"/g' /etc/csf/csf.conf
+sed -i 's/UDP_IN = "20,21,53"/UDP_IN = ""/g' /etc/csf/csf.conf
+sed -i 's/UDP_OUT = "20,21,53,113,123"/UDP_OUT = ""/g' /etc/csf/csf.conf
 
 # Ignore alert if following process use exeeded resource
 echo "exe:/usr/sbin/rsyslogd" | tee --append /etc/csf/csf.pignore
