@@ -1,5 +1,19 @@
 #!/bin/bash
 
+#########################################################
+# 1. Create sys admin user
+# 2. Secure ssh
+# 3. Set timezone to UTC
+# 4. Install & configure sendmail
+# 5. Install & configure Webmin
+# 6. Install & configure CSF
+# (7). Install & configure Munin
+# (8). Install & configure RabbitMQ
+# (9). Install & configure automysqlbackup
+# (10). Cloudflare for HTTPS & DNS
+#########################################################
+
+
 # load config vars
 source .env.sh
 
