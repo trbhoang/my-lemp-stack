@@ -7,10 +7,12 @@
 # 4. Install & configure sendmail
 # 5. Install & configure Webmin
 # 6. Install & configure CSF
-# (7). Install & configure Munin
-# (8). Install & configure RabbitMQ
-# (9). Install & configure automysqlbackup
-# (10). Cloudflare for HTTPS & DNS
+# (7). Install & configure Munin (produces nice graphs about nearly every aspect of your server)
+# (7). Install & configure PRTG (Paessler) or Nagios
+# (8). Install & configure Monit (monitors and ensures the availability of services: nginx, mysql,...)
+# (9). Install & configure RabbitMQ
+# (10). Install & configure automysqlbackup
+# (11). Cloudflare for HTTPS & DNS
 #########################################################
 
 
