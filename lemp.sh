@@ -40,7 +40,7 @@ apt-get -y install php-pear php7.3-curl php7.3-dev php7.3-gd php7.3-mbstring php
 #
 
 ### Default vhost
-mv /etc/nginx/nginx.conf /etc/nginx/ngin.conf.bak
+mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
 mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
 cp ./nginx/nginx.conf /etc/nginx/
 cp ./nginx/sites-available/default /etc/nginx/sites-available/
@@ -50,10 +50,10 @@ mkdir -p /etc/nginx/conf.d/server/
 cp ./nginx/conf.d/server/1-common.conf /etc/nginx/conf.d/server/
 
 ### Create dir structure for new website
-mkdir -p /var/www/vhosts/$SITE_NAME/{web,logs,ssl}
-chown -R www-data:www-data /var/www/vhosts/$SITE_NAME
-chmod -R 775 /var/www/vhosts/$SITE_NAME
-cp ./nginx/index.php /var/www/vhosts/$SITE_NAME/web/
+mkdir -p /var/www/$SITE_NAME/{web,logs,ssl}
+chown -R www-data:www-data /var/www/$SITE_NAME
+chmod -R 775 /var/www/$SITE_NAME
+cp ./nginx/index.php /var/www/$SITE_NAME/web/
 
 ### Create new vhost for website
 touch /etc/nginx/sites-available/$SITE_NAME
@@ -68,15 +68,15 @@ echo "server {
 server {
 	listen 80;
 
-	root /var/www/vhosts/$SITE_NAME/web;
+	root /var/www/$SITE_NAME/web;
 	index index.php index.html index.htm;
 
 	server_name $SITE_NAME;
 
 	include /etc/nginx/conf.d/server/1-common.conf;
 
-	access_log /var/www/vhosts/$SITE_NAME/logs/access.log;
-	error_log /var/www/vhosts/$SITE_NAME/logs/error.log warn;
+	# access_log /var/www/$SITE_NAME/logs/access.log;
+	# error_log /var/www/$SITE_NAME/logs/error.log warn;
 
 	location ~ \.php$ {
 		try_files \$uri \$uri/ /index.php?$args;
