@@ -49,44 +49,13 @@ cp ./nginx/sites-available/default /etc/nginx/sites-available/
 mkdir -p /etc/nginx/conf.d/server/
 cp ./nginx/conf.d/server/1-common.conf /etc/nginx/conf.d/server/
 
-### Create dir structure for new website
-mkdir -p /var/www/$SITE_NAME/{web,logs,ssl}
-chown -R www-data:www-data /var/www/$SITE_NAME
-chmod -R 775 /var/www/$SITE_NAME
-cp ./nginx/index.php /var/www/$SITE_NAME/web/
+### Create dir structure & vhost for writerviet.com
+mkdir -p /var/www/writerviet.com/{web,logs,ssl}
+chown -R www-data:www-data /var/www/writerviet.com
+chmod -R 775 /var/www/writerviet.com
+cp ./nginx/index.php /var/www/writerviet.com/web/
 
-### Create new vhost for website
-touch /etc/nginx/sites-available/$SITE_NAME
-echo "server {
-	listen 80;
-	server_name www.$SITE_NAME;
-	location ~ ^/\.well-known/(.*) {}
-	location / {
-		return 302 http://$SITE_NAME$request_uri;
-	}
-}
-server {
-	listen 80;
+cp ./nginx/sites-available/writerviet.com /etc/nginx/sites-available/
+ln -s /etc/nginx/sites-available/writerviet.com /etc/nginx/sites-enabled/writerviet.com
 
-	root /var/www/$SITE_NAME/web;
-	index index.php index.html index.htm;
-
-	server_name $SITE_NAME;
-
-	include /etc/nginx/conf.d/server/1-common.conf;
-
-	# access_log /var/www/$SITE_NAME/logs/access.log;
-	# error_log /var/www/$SITE_NAME/logs/error.log warn;
-
-	location ~ \.php$ {
-		try_files \$uri \$uri/ /index.php?$args;
-		fastcgi_split_path_info ^(.+\.php)(/.+)$;
-		fastcgi_pass unix:/var/run/php/php7.3-fpm.sock;
-		fastcgi_index index.php;
-		fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
-		include fastcgi_params;
-	}
-}" > /etc/nginx/sites-available/$SITE_NAME
-
-ln -s /etc/nginx/sites-available/$SITE_NAME /etc/nginx/sites-enabled/$SITE_NAME
 systemctl restart nginx; systemctl status nginx
