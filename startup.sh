@@ -45,8 +45,8 @@ echo "Protocol 2" | tee --append /etc/ssh/sshd_config
 # configure idle timeout interval
 echo "ClientAliveInterval 360" | tee --append /etc/ssh/sshd_config
 echo "ClientAliveCountMax 0" | tee --append /etc/ssh/sshd_config
-# disable port forwarding
-echo "AllowTcpForwarding no" | tee --append /etc/ssh/sshd_config
+# disable port forwarding (yes: to support connecting from localhost)
+echo "AllowTcpForwarding yes" | tee --append /etc/ssh/sshd_config
 echo "X11Forwarding no" | tee --append /etc/ssh/sshd_config
 
 # Reload SSH changes
@@ -71,6 +71,12 @@ echo -e "APT::Periodic::Update-Package-Lists \"1\";\nAPT::Periodic::Unattended-U
 # Change the timezone
 echo $TIMEZONE > /etc/timezone
 dpkg-reconfigure -f noninteractive tzdata
+
+
+# Change hostname
+hostnamectl set-hostname $HOST_NAME
+sed -i "1i 127.0.1.1 $HOST_DNS $HOST_NAME" /etc/hosts
+
 
 
 # Install & configure sendmail

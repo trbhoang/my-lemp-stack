@@ -15,8 +15,10 @@ Vagrant.configure("2") do |config|
   end
 
   #
-  # ssh vagrant box as devops user:
-  #   ssh -p 2222 devops@localhost
+  # ssh vagrant box as admin user:
+	#   ssh -p 2222 admin@localhost
+	#   ssh admin@192.168.2.2
+	#
   # to provision ansible playbook
   #    vagrant provision
   #
