@@ -1,6 +1,8 @@
 #!/bin/bash
 
 
+sudo su
+
 # load config vars
 source .env.sh
 
@@ -12,10 +14,10 @@ apt update
 
 apt -y install zabbix-server-mysql zabbix-frontend-php zabbix-nginx-conf zabbix-agent
 
-mysql -uroot -p${ROOT_PASSWD} -e "CREATE DATABASE zabbix CHARACTER SET utf8 collate utf8_bin;"
-mysql -uroot -p${ROOT_PASSWD} -e "CREATE USER zabbix@localhost IDENTIFIED BY 'zabbix';"
-mysql -uroot -p${ROOT_PASSWD} -e "GRANT ALL PRIVILEGES ON zabbix.* TO 'zabbix'@'localhost';"
-mysql -uroot -p${ROOT_PASSWD} -e "FLUSH PRIVILEGES;"
+mysql -uroot -p${DB_ROOT_PASSWD} -e "CREATE DATABASE zabbix CHARACTER SET utf8 collate utf8_bin;"
+mysql -uroot -p${DB_ROOT_PASSWD} -e "CREATE USER zabbix@localhost IDENTIFIED BY 'zabbix';"
+mysql -uroot -p${DB_ROOT_PASSWD} -e "GRANT ALL PRIVILEGES ON zabbix.* TO 'zabbix'@'localhost';"
+mysql -uroot -p${DB_ROOT_PASSWD} -e "FLUSH PRIVILEGES;"
 
 # import initial schema and data
 zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -uzabbix -p zabbix

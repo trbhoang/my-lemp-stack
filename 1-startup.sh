@@ -1,23 +1,29 @@
 #!/bin/bash
 
 #########################################################
-# 1. Create sys admin user
-# 2. Secure ssh
-# 3. Set timezone to UTC
-# 4. Install & configure sendmail
-# 5. Install & configure Webmin
-# 6. Install & configure CSF
-# (7). Install & configure Munin (produces nice graphs about nearly every aspect of your server)
-# (7). Install & configure PRTG (Paessler) or Nagios
-# (8). Install & configure Monit (monitors and ensures the availability of services: nginx, mysql,...)
-# (9). Install & configure RabbitMQ
-# (10). Install & configure automysqlbackup
-# (11). Cloudflare for HTTPS & DNS
+#  Remove amazon ssm agent which might become a backdoor
+#  Create sys admin user
+#  Secure ssh
+#  Set timezone to UTC
+#  Install & configure sendmail
+#  Install & configure Webmin
+#  Install & configure CSF
+#  Install & configure Munin (produces nice graphs about nearly every aspect of your server)
+#  Install & configure PRTG (Paessler) or Nagios
+#  Install & configure Monit (monitors and ensures the availability of services: nginx, mysql,...)
+#  Install & configure RabbitMQ
+#  Install & configure automysqlbackup
+#  Cloudflare for HTTPS & DNS
 #########################################################
+
 
 
 # load config vars
 source .env.sh
+
+
+# remove amazon-ssm-agent
+snap remove amazon-ssm-agent
 
 
 # Create admin user
@@ -55,6 +61,7 @@ systemctl reload sshd
 
 # Fix environment
 echo 'LC_ALL="en_US.UTF-8"' >> /etc/environment
+echo 'LC_CTYPE="en_US.UTF-8"' >> /etc/environment
 
 
 # Install essential packages
@@ -164,3 +171,4 @@ systemctl enable lfd
 
 # List csf firewall rules
 csf -l
+

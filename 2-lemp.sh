@@ -47,15 +47,18 @@ cp ./nginx/sites-available/default /etc/nginx/sites-available/
 
 ### Setup default settings for all virtual hosts
 mkdir -p /etc/nginx/conf.d/server/
-cp ./nginx/conf.d/server/1-common.conf /etc/nginx/conf.d/server/
+cp ./nginx/conf.d/server/common.conf /etc/nginx/conf.d/server/
+cp ./nginx/conf.d/server/security.conf /etc/nginx/conf.d/server/
+cp ./nginx/conf.d/server/letsencrypt.conf /etc/nginx/conf.d/server/
+cp ./nginx/conf.d/server/php.conf /etc/nginx/conf.d/server/
 
-### Create dir structure & vhost for writerviet.com
-mkdir -p /var/www/writerviet.com/{web,logs,ssl}
-chown -R www-data:www-data /var/www/writerviet.com
-chmod -R 775 /var/www/writerviet.com
-cp ./nginx/index.php /var/www/writerviet.com/web/
+### Create dir structure & vhost
+mkdir -p /var/www/$DOMAIN/{web,logs,ssl}
+chown -R www-data:www-data /var/www/$DOMAIN
+chmod -R 775 /var/www/$DOMAIN
+cp ./nginx/index.php /var/www/$DOMAIN/web/
 
-cp ./nginx/sites-available/writerviet.com /etc/nginx/sites-available/
-ln -s /etc/nginx/sites-available/writerviet.com /etc/nginx/sites-enabled/writerviet.com
+cp ./nginx/sites-available/$DOMAIN /etc/nginx/sites-available/
+ln -s /etc/nginx/sites-available/$DOMAIN /etc/nginx/sites-enabled/$DOMAIN
 
 systemctl restart nginx; systemctl status nginx
