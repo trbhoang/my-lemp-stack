@@ -1,0 +1,50 @@
+server {
+    server_name ngaymaidamcuoi.com;
+    set $base /var/www/ngaymaidamcuoi.com;
+    root $base/web;
+
+    include /etc/nginx/conf.d/server/common.conf;
+    include /etc/nginx/conf.d/server/security.conf;
+    include /etc/nginx/conf.d/server/php.conf;
+
+    listen [::]:443 ssl ipv6only=on http2; # managed by Certbot
+    listen 443 ssl http2; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/ngaymaidamcuoi.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/ngaymaidamcuoi.com/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+}
+
+# subdomains redirect
+server {
+    server_name www.ngaymaidamcuoi.com;
+    return 301 https://ngaymaidamcuoi.com$request_uri;
+
+    listen 443 ssl http2; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/ngaymaidamcuoi.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/ngaymaidamcuoi.com/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+}
+
+server {
+    if ($host = ngaymaidamcuoi.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+    listen 80;
+    listen [::]:80;
+
+    server_name ngaymaidamcuoi.com;
+    return 404; # managed by Certbot
+}
+
+server {
+    if ($host = www.ngaymaidamcuoi.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+    server_name www.ngaymaidamcuoi.com;
+    listen 80;
+    return 404; # managed by Certbot
+}

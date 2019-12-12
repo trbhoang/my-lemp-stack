@@ -12,21 +12,19 @@
 source .env.sh
 
 
-# create a common ACME-challenge directory (for Let's Encrypt)
-mkdir -p /var/www/_letsencrypt
-chown www-data /var/www/_letsencrypt
-
-# install acme script
-curl https://get.acme.sh | sh
-LE_WORKING_DIR="/root/.acme.sh"
+# install certbot
+add-apt-repository ppa:certbot/certbot
+apt-get update
+apt-get install certbot python-certbot-nginx
 
 
-# issue a cert
-/root/.acme.sh/acme.sh  --issue --nginx -d $DOMAIN  -d "www.$DOMAIN" -w /var/www/_letsencrypt
+# issue certificate
+# or just get certificate: certbot certonly --nginx
+certbot --nginx
 
-# install the certs to Nginx
-/root/.acme.sh/acme.sh --install-cert -d $DOMAIN \
-	--key-file       /var/www/$DOMAIN/ssl/key.pem  \
-	--fullchain-file /var/www/$DOMAIN/ssl/cert.pem \
-	--reloadcmd     "nginx -t && systemctl reload nginx"
+
+# renew: certbot renew
+# test renew: certbot renew --dry-run
+# renew cron: /etc/cron.d/certbot
+
 
