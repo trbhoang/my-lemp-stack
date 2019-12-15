@@ -8,11 +8,13 @@ if free | awk '/^Swap:/ {exit !$2}'; then
     echo "Swap memory existed."
 else
     echo "Allocate swap memory..."
+	# or $ sudo fallocate -l 1G /swapfile
 	sudo dd if=/dev/zero of=/var/myswap bs=1M count=2048
 	sudo mkswap /var/myswap
 	sudo swapon /var/myswap
 
 	# add to /etc/fstab for swap enabled if reboot
+	# or $ echo '/swapfile none swap swap 0 0' | sudo tee -a /etc/fstab
 	sed -i "\$ a /var/myswap swap swap defaults 0 0" /etc/fstab
 fi
 

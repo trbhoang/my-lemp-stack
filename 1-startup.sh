@@ -25,6 +25,16 @@ source .env.sh
 # remove amazon-ssm-agent
 snap remove amazon-ssm-agent
 
+# remove never-used services: snapd, lxcfs
+# ref: https://peteris.rocks/blog/htop/
+sudo apt remove lvm2 -y --purge
+sudo apt remove snapd -y --purge
+sudo apt remove lxcfs -y --purge
+sudo apt remove mdadm -y --purge
+sudo apt remove policykit-1 -y --purge
+sudo apt remove open-iscsi -y --purge
+sudo systemctl stop getty@tty1
+
 
 # Create admin user
 adduser --disabled-password --gecos "Admin" $SYSADMIN_USER
