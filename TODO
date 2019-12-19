@@ -1,0 +1,11 @@
+* Remove unused system services to minimize ubuntu
+	Ref:
+		https://peteris.rocks/blog/htop/
+
+- Add security header
+	Ref:
+		https://nullsweep.com/http-security-headers-a-complete-guide/
+
+- Logstash config for filebeat modules
+	Ref:
+		https://www.elastic.co/guide/en/logstash/current/logstash-config-for-filebeat-modules.html
