@@ -27,4 +27,4 @@
 	$ systemctl restart webmin
 	Ref: https://bobcares.com/blog/webmin-reverse-proxy/
 
-- Hide nginx version
+* Hide nginx version
