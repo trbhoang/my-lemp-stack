@@ -3,6 +3,11 @@
 # Beats --> Logstash --> Elasticsearch
 
 
+
+# load config vars
+source ../.env.sh
+
+
 # elasticsearch require swap memory
 # setup: https://tecadmin.net/add-swap-partition-on-ec2-linux-instance/
 #        https://linuxize.com/post/how-to-add-swap-space-on-ubuntu-18-04/
@@ -32,13 +37,13 @@ echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee 
 sudo apt-get update
 
 
-# install elasticsearch
+# install Elasticsearch
 sudo apt-get install elasticsearch
-sudo systemctl enable elasticsearch.service
-sudo systemctl start elasticsearch.service
+sudo systemctl enable elasticsearch
+sudo systemctl start elasticsearch
 
 
-# install logstash
+# install Logstash
 #
 # test logstash:
 #  $ /usr/share/logstash/bin/logstash --path.settings /etc/logstash/ -f ./logstash-test.conf --config.test_and_exit
@@ -48,13 +53,28 @@ cp ./logstash.nginx.conf /etc/logstash/conf.d/
 # correct permission for logstash data & log folder
 sudo chown -R logstash:logstash /var/lib/logstash
 sudo chown -R logstash:adm /var/log/logstash
-sudo systemctl enable logstash.service
-sudo systemctl start logstash.service
+sudo systemctl enable logstash
+sudo systemctl start logstash
 
 
-# install filebeat
+# install Filebeat
 sudo apt-get install filebeat
 mv /etc/filebeat/filebeat.yml /etc/filebeat/filebeat.yml.bk
 cp ./filebeat.yml /etc/filebeat/filebeat.yml
 sudo systemctl enable filebeat
-sudo systemctl start filebeat.service
+sudo systemctl start filebeat
+
+
+# install Kibana
+sudo apt-get install kibana
+sudo systemctl enable kibana
+sudo systemctl start kibana
+
+
+# install and configure Nginx
+sudo add-apt-repository -y ppa:nginx/stable && apt-get update
+sudo apt-get -y install nginx
+sudo echo $BASIC_AUTH > /etc/nginx/.htpasswd
+sudo mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bk
+sudo cp ./nginx.conf /etc/nginx/nginx.conf
+

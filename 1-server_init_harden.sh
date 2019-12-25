@@ -64,6 +64,8 @@ echo "ClientAliveCountMax 0" | tee --append /etc/ssh/sshd_config
 # disable port forwarding (yes: to support connecting from localhost)
 echo "AllowTcpForwarding yes" | tee --append /etc/ssh/sshd_config
 echo "X11Forwarding no" | tee --append /etc/ssh/sshd_config
+echo "UseDNS no" | tee --append /etc/ssh/sshd_config
+
 
 # Reload SSH changes
 systemctl reload sshd
@@ -118,7 +120,7 @@ systemctl restart sendmail
 echo "Subject: sendmail test" | sendmail -v $SYSADMIN_EMAIL
 
 
-# Install Webmin for server Control Panel
+# Install Webmin for server hosting Control Panel
 # Install Webmin modules for CSF, Nginx, MariaDB
 #		> Webmin > Webmin Configuration > Webmin Modules >
 #		- CSF: > From local file > /usr/local/csf/csfwebmin.tgz > Install module > Refresh modules
@@ -134,6 +136,11 @@ echo "Subject: sendmail test" | sendmail -v $SYSADMIN_EMAIL
 wget -q http://www.webmin.com/jcameron-key.asc -O- | sudo apt-key add -
 add-apt-repository "deb [arch=amd64] http://download.webmin.com/download/repository sarge contrib"
 apt -y install webmin
+# disable ssl, webin will be proxied through nginx otherwise cause cookie issue on chrome
+sed -i 's/ssl=1/ssl=0/g' /etc/webmin/miniserv.conf
+# add 'referer=webmin' to /etc/webmin/config
+echo "referer=webmin" | tee --append /etc/webmin/config
+systemctl restart webmin
 
 
 ### Firewall & login monitoring (csf, lfd)

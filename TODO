@@ -9,3 +9,20 @@
 - Logstash config for filebeat modules
 	Ref:
 		https://www.elastic.co/guide/en/logstash/current/logstash-config-for-filebeat-modules.html
+
+- Tail systemd service log
+	$ sudo journalctl -u elasticsearch -f
+
+- https://logz.io/blog/securing-elk-nginx/
+
+- reviewcongty.com
+
+- check why csf auto allow your laptop IP (csf.allow)
+
+- To see all ports listening for traffic:
+	$ sudo ss -lntup
+
+- To prevent warning: Warning! Webmin has detected that the program
+	$ add 'referer=webmin' to end of /etc/webmin/config
+	$ systemctl restart webmin
+	Ref: https://bobcares.com/blog/webmin-reverse-proxy/
