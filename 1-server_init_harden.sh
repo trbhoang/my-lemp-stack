@@ -132,6 +132,7 @@ echo "Subject: sendmail test" | sendmail -v $SYSADMIN_EMAIL
 #   		Command to start MySQL server	> systemctl start mariadb
 #   		Command to stop MySQL server	> systemctl stop mariadb
 #   		MySQL configuration file	> /etc/mysql/my.cnf
+#		- Set session timeout after x mins inactive: Webmin Configuration > Authentication
 #
 wget -q http://www.webmin.com/jcameron-key.asc -O- | sudo apt-key add -
 add-apt-repository "deb [arch=amd64] http://download.webmin.com/download/repository sarge contrib"
