@@ -25,6 +25,14 @@ else
 fi
 
 
+# install and configure Nginx as proxy for Elasticsearch and Kibana
+sudo add-apt-repository -y ppa:nginx/stable && apt-get update
+sudo apt-get -y install nginx
+sudo echo $BASIC_AUTH > /etc/nginx/.htpasswd
+sudo mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bk
+sudo cp ./nginx.conf /etc/nginx/nginx.conf
+
+
 # install java which logstash requires
 # logstash requires java
 sudo apt install -y openjdk-11-jre-headless
@@ -71,10 +79,6 @@ sudo systemctl enable kibana
 sudo systemctl start kibana
 
 
-# install and configure Nginx
-sudo add-apt-repository -y ppa:nginx/stable && apt-get update
-sudo apt-get -y install nginx
-sudo echo $BASIC_AUTH > /etc/nginx/.htpasswd
-sudo mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bk
-sudo cp ./nginx.conf /etc/nginx/nginx.conf
-
+# install Metricbeat
+sudo apt-get install metricbeat
+sudo systemctl enable metricbeat
