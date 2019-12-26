@@ -46,6 +46,9 @@ apt-get -y install php-pear php7.3-curl php7.3-dev php7.3-gd php7.3-mbstring php
 # Configure nginx
 #
 
+# Basic auth
+sudo echo $BASIC_AUTH > /etc/nginx/.htpasswd
+
 ### Default vhost
 mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
 mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak

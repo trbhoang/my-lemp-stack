@@ -120,33 +120,7 @@ systemctl restart sendmail
 echo "Subject: sendmail test" | sendmail -v $SYSADMIN_EMAIL
 
 
-# Install Webmin for server hosting Control Panel
-# Install Webmin modules for CSF, Nginx, MariaDB
-#		> Webmin > Webmin Configuration > Webmin Modules >
-#		- CSF: > From local file > /usr/local/csf/csfwebmin.tgz > Install module > Refresh modules
-#				CSF module was installed under "System"
-#   - Nginx: > From HTTP or FTP URL > https://www.justindhoffman.com/sites/justindhoffman.com/files/nginx-0.11.wbm_.gz > Install module > Refresh modules
-#				Nginx module was install under "Servers"
-#	 	- MariaDB:
-#   		Unused Modules > MySQL Database Server > module configuration > System configuration
-#   		Command to start MySQL server	> systemctl start mariadb
-#   		Command to stop MySQL server	> systemctl stop mariadb
-#   		MySQL configuration file	> /etc/mysql/my.cnf
-#		- Set session timeout after x mins inactive: Webmin Configuration > Authentication
-#
-wget -q http://www.webmin.com/jcameron-key.asc -O- | sudo apt-key add -
-add-apt-repository "deb [arch=amd64] http://download.webmin.com/download/repository sarge contrib"
-apt -y install webmin
-# disable ssl, webin will be proxied through nginx otherwise cause cookie issue on chrome
-sed -i 's/ssl=1/ssl=0/g' /etc/webmin/miniserv.conf
-# add 'referer=webmin' to /etc/webmin/config
-echo "referer=webmin" | tee --append /etc/webmin/config
-systemctl restart webmin
-
-
 ### Firewall & login monitoring (csf, lfd)
-### Install csf module on webmin (to control csf from webmin)
-### 		https://community.time4vps.com/discussion/150/csf-configserver-security-amp-firewall-installation-on-webmin
 
 # Install & configure CSF (https://www.configserver.com/cp/csf.html)
 apt-get -y install libwww-perl unzip
@@ -173,6 +147,10 @@ sed -i 's/TCP_IN = "20,21,22,25,53,80,110,143,443,465,587,993,995"/TCP_IN = "22,
 sed -i 's/TCP_OUT = "20,21,22,25,53,80,110,113,443,587,993,995"/TCP_OUT = "22,80,443"/g' /etc/csf/csf.conf
 sed -i 's/UDP_IN = "20,21,53"/UDP_IN = ""/g' /etc/csf/csf.conf
 sed -i 's/UDP_OUT = "20,21,53,113,123"/UDP_OUT = ""/g' /etc/csf/csf.conf
+sed -i 's/TCP6_IN = "20,21,22,25,53,80,110,143,443,465,587,993,995,2077,2078,2082,2083,2086,2087,2095,2096,8443"/TCP6_IN = ""/g' /etc/csf/csf.conf
+sed -i 's/TCP6_OUT = "20,21,22,25,37,43,53,80,110,113,443,587,873,993,995,2086,2087,2089,2703"/TCP6_OUT = ""/g' /etc/csf/csf.conf
+sed -i 's/UDP6_IN = "20,21,53"/UDP6_IN = ""/g' /etc/csf/csf.conf
+sed -i 's/UDP6_OUT = "20,21,53,113,123,873,6277,24441"/UDP6_OUT = ""/g' /etc/csf/csf.conf
 
 # disable LFD excessive resource usage alert
 # ref: https://www.interserver.net/tips/kb/disable-lfd-excessive-resource-usage-alert/
