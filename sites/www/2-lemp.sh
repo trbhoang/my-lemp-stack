@@ -71,4 +71,5 @@ cp ./nginx/index.php /var/www/$DOMAIN/web/
 cp ./nginx/sites-available/$DOMAIN /etc/nginx/sites-available/
 ln -s /etc/nginx/sites-available/$DOMAIN /etc/nginx/sites-enabled/$DOMAIN
 
-systemctl restart nginx; systemctl status nginx
+systemctl restart nginx
+systemctl status nginx

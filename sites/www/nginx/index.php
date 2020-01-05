@@ -1,6 +1,7 @@
 <?php
 
 // Show all information, defaults to INFO_ALL
-phpinfo();
+// phpinfo();
+echo "Hello World!"
 
 ?>

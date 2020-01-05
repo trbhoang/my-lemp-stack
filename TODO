@@ -28,3 +28,17 @@
 	Ref: https://bobcares.com/blog/webmin-reverse-proxy/
 
 * Hide nginx version
+
+* Free html templates: https://htmltemplates.co/
+
+* UI framework: https://github.com/stowball/hucssley
+
+* Wordpress < Joomla < Drupal (most advanced)
+	Ref:
+		https://iconshots.com/developer/which-cms-is-fastest-drupal-wordpress-or-joomla
+
+- Backup using Restic
+	Ref:
+		https://restic.readthedocs.io/en/latest/index.html
+
+- Use Caddy as webserver to replace Nginx
