@@ -42,3 +42,14 @@
 		https://restic.readthedocs.io/en/latest/index.html
 
 - Use Caddy as webserver to replace Nginx
+
+- Check B2 cloud storage for backup data
+
+- Check Prometheus vs Grafana vs ELK
+	Ref:
+		https://logdna.com/resource/kibana-vs-grafana-vs-prometheus-vs-logdna/
+
+- Ref https://copychar.cc/ for wv tools
+	(tbhoang/samples/copychar)
+
+- Rsync: rsync -avz --delete sites/www user@94.237.76.105:~/tech-stack
