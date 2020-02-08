@@ -8,8 +8,11 @@
 #####################################
 
 
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+
 # load config vars
-source ../.env.sh
+source $DIR/../.env.sh
 
 export B2_ACCOUNT_ID=$B2_ACCOUNT_ID
 export B2_ACCOUNT_KEY=$B2_ACCOUNT_KEY
@@ -35,3 +38,5 @@ restic forget --prune --keep-daily 30 --keep-weekly 52
 # sample restores
 # restic restore latest --target /tmp/restore-web --path="/var/www/writerviet.com"
 # restic restore latest --target /tmp/restore-db --path="/db"
+# restic -r b2:bucket:path restore latest --target /tmp/restore-db --path="/db"
+
