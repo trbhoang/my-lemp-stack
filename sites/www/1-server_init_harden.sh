@@ -85,7 +85,8 @@ apt-get dist-upgrade ; apt-get -y update ; apt-get -y upgrade
 apt-get -y install unattended-upgrades software-properties-common apache2-utils dnsutils apt-transport-https
 apt-get -y install htop
 # Install security updates automatically
-echo -e "APT::Periodic::Update-Package-Lists \"1\";\nAPT::Periodic::Unattended-Upgrade \"1\";\nUnattended-Upgrade::Automatic-Reboot \"false\";\n" > /etc/apt/apt.conf.d/20auto-upgrades
+echo -e "APT::Periodic::Update-Package-Lists \"1\";\nAPT::Periodic::Unattended-Upgrade \"1\";\nUnattended-Upgrade::Automatic-Reboot \"false\";\nAPT::Periodic::AutocleanInterval \"5\";\n" > /etc/apt/apt.conf.d/20auto-upgrades
+sed -i 's/\/\/Unattended-Upgrade::Mail "root";/Unattended-Upgrade::Mail "trbhoang@gmail.com";/g' /etc/apt/apt.conf.d/50unattended-upgrades
 /etc/init.d/unattended-upgrades restart
 
 
