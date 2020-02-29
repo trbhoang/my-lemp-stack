@@ -1,8 +1,8 @@
-http://localhost:80
-
-root * /var/www/writerviet.com/forum
-log /var/log/caddy/access.log
-errors /var/log/caddy/error.log
-encode gzip
-php_fastcgi unix//var/run/php/php7.3-fpm.sock
-file_server
+localhost {
+	root * /var/www/writerviet.com/forum
+	# log /var/log/caddy/access.log
+	# errors /var/log/caddy/error.log
+    try_files {path} /index.php?{query}&p={path}
+	php_fastcgi unix//var/run/php/php7.3-fpm.sock
+	file_server
+}

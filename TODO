@@ -54,8 +54,6 @@
 
 - Rsync: rsync -avz --delete sites/www user@94.237.76.105:~/tech-stack
 
-- Mimic https://www.grammarly.com/ for writerviet's wordcounter tool
-
 - Add icons for each forum on forum listing page
 
 - Quote: "When you're always chasing every penny, it's hard to innovate."
